@@ -203,17 +203,17 @@ export default function Home() {
                 <AudioPlayer audioSrc="/audio.mp3" />
               </motion.div>
             </AnimatedSection>
-            <div className={`relative ${isMobile ? "h-64 mt-8" : "h-80 md:h-96"}`}>
+            <div className={`relative ${isMobile ? "h-[320px] mt-8 flex justify-center" : "h-80 md:h-96"}`}>
               <motion.div
-                className={`absolute ${isMobile ? "top-0 left-1/2 transform -translate-x-1/2" : "top-0 right-0 w-full h-full md:w-[120%] md:-right-[10%]"}`}
+                className={`${isMobile ? "relative" : "absolute top-0 right-0 w-full h-full md:w-[120%] md:-right-[10%]"}`}
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 animate={isHeroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
                 transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-                style={{ scale: heroImageScale, rotate: heroImageRotate }}
+                style={isMobile ? {} : { scale: heroImageScale, rotate: heroImageRotate }}
               >
                 <div className="relative w-full h-full">
                   <motion.div
-                    className={`absolute ${isMobile ? "w-[280px] h-[280px]" : "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px]"} overflow-hidden`}
+                    className={`${isMobile ? "w-[280px] h-[280px]" : "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px]"} overflow-hidden`}
                     whileHover={{ scale: 1.05 }}
                   >
                     <Image
@@ -224,41 +224,39 @@ export default function Home() {
                       className={`${isMobile ? "w-[280px] h-[280px]" : "w-[480px] h-[480px]"} object-cover`}
                     />
                   </motion.div>
-                  {!isMobile && (
-                    <>
-                      <motion.div
-                        className="absolute top-[10%] left-[10%] text-white font-medium rotate-[-15deg] text-[#ff0066]"
-                        animate={{
-                          y: [0, -10, 0],
-                          rotate: [-15, -12, -15],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Number.POSITIVE_INFINITY,
-                          repeatType: "reverse",
-                          ease: "easeInOut",
-                        }}
-                      >
-                       <ArrowTop/>
-                      </motion.div>
-                      <motion.div
-                        className="absolute bottom-[1%] right-[5%] text-white font-medium rotate-[15deg] text-[#ff0066]"
-                        animate={{
-                          y: [0, 10, 0],
-                          rotate: [15, 18, 15],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Number.POSITIVE_INFINITY,
-                          repeatType: "reverse",
-                          ease: "easeInOut",
-                          delay: 0.5,
-                        }}
-                      >
-                      <ArrowBottom/>
-                      </motion.div>
-                    </>
-                  )}
+
+                  {/* Arrows - shown on both mobile and desktop */}
+                  <motion.div
+                    className={`${isMobile ? "absolute top-[-15%] left-[-15%] w-[80px]" : "absolute top-[10%] left-[10%]"} text-white font-medium rotate-[-15deg] text-[#ff0066]`}
+                    animate={{
+                      y: [0, -10, 0],
+                      rotate: [-15, -12, -15],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Number.POSITIVE_INFINITY,
+                      repeatType: "reverse",
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <ArrowTop className={isMobile ? "w-[60px] h-auto" : ""} />
+                  </motion.div>
+                  <motion.div
+                    className={`${isMobile ? "absolute bottom-[-10%] right-[-15%] w-[100px]" : "absolute bottom-[1%] right-[5%]"} text-white font-medium rotate-[15deg] text-[#ff0066]`}
+                    animate={{
+                      y: [0, 10, 0],
+                      rotate: [15, 18, 15],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Number.POSITIVE_INFINITY,
+                      repeatType: "reverse",
+                      ease: "easeInOut",
+                      delay: 0.5,
+                    }}
+                  >
+                    <ArrowBottom className={isMobile ? "w-[80px] h-auto" : ""} />
+                  </motion.div>
                 </div>
               </motion.div>
             </div>
