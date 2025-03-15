@@ -9,6 +9,8 @@ import ShortsCarousel from "@/components/shorts-carousel"
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
 import { AnimatedSection } from "@/components/animated-section"
 import { AudioPlayer } from "@/components/audio-player"
+import ArrowBottom from "@/components/svg/02"
+import ArrowTop from "@/components/svg/01"
 
 
 
@@ -34,9 +36,10 @@ export default function Home() {
   const textureY = useTransform(scrollYProgress, [0, 1], [0, 300])
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f3e9] w-screen overflow-hidden">
+    <div className="flex flex-col min-h-screen bg-[#f8f3e9] w-screen overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]">
       <motion.header
-        className="container mx-auto py-4 border-b border-[#e0d9cc] h-[64px] flex items-center justify-between overflow-hidden"
+        className="container mx-auto py-4 border-b border-[#e0d9cc] h-[64px] bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')] flex items-center justify-between overflow-hidden"
+        
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -60,22 +63,16 @@ export default function Home() {
         </nav>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button variant="outline" className="rounded-full text-sm px-6">
-            Spenden
+            Kontakt
           </Button>
         </motion.div>
-        <motion.div
-          className="absolute opacity-10 z-0 w-screen h-[64px] bg-center bg-no-repeat bg-cover mix-blend-multiply"
-          style={{
-            backgroundImage: "url('/texture.png')",
-            backgroundPosition: "top",
-            y: textureY,
-          }}
-        ></motion.div>
+       
       </motion.header>
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section ref={heroRef} className="container mx-auto py-16 md:py-24 relative h-[720px] overflow-hidden">
+        <section ref={heroRef} className="container mx-auto py-16 md:py-24 relative h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]">
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <AnimatedSection direction="left" delay={0.2} className="space-y-6">
               <motion.h1
@@ -132,11 +129,7 @@ export default function Home() {
               >
                  <AudioPlayer audioSrc="/audio.mp3" />
                
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button variant="outline" className="rounded-full flex items-center gap-2">
-                    Mehr erfahren
-                  </Button>
-                </motion.div>
+              
               </motion.div>
             </AnimatedSection>
             <div className="relative h-80 md:h-96">
@@ -175,31 +168,8 @@ export default function Home() {
                       ease: "easeInOut",
                     }}
                   >
-                    Christian
-                    <motion.svg
-                      className="absolute -bottom-6 -right-6 w-16 h-16 rotate-[30deg] color-[#ff0066]"
-                      viewBox="0 0 24 24"
-                      
                     
-                      xmlns="http://www.w3.org/2000/svg"
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Number.POSITIVE_INFINITY,
-                        repeatType: "reverse",
-                        ease: "easeInOut",
-                        delay: 0.5,
-                      }}
-                    >
-                      <path
-                                           d="M21.4575 3.34721C22.2016 2.98294 22.5094 2.08447 22.1452 1.34043C21.7809 0.596388 20.8824 0.288522 20.1384 0.652793L21.4575 3.34721ZM30.3433 51.8974C31.115 51.5962 31.4965 50.7264 31.1953 49.9547L26.2875 37.3784C25.9863 36.6066 25.1166 36.2252 24.3448 36.5263C23.5731 36.8275 23.1916 37.6973 23.4928 38.469L27.8553 49.6479L16.6763 54.0105C15.9046 54.3116 15.5231 55.1814 15.8243 55.9531C16.1254 56.7249 16.9952 57.1064 17.767 56.8052L30.3433 51.8974ZM20.1384 0.652793C16.032 2.66318 11.6056 5.50727 7.99941 8.99159C4.40518 12.4644 1.51665 16.681 0.718604 21.4394C-0.0921178 26.2734 1.2962 31.4159 5.77164 36.5695C10.2082 41.6782 17.6962 46.8301 29.1955 51.8737L30.4004 49.1263C19.0997 44.1699 12.0627 39.2384 8.03675 34.6024C4.04969 30.0112 3.03801 25.7474 3.67728 21.9356C4.32924 18.0482 6.7407 14.3794 10.084 11.149C13.4153 7.93023 17.5638 5.25349 21.4575 3.34721L20.1384 0.652793Z"
-
-                        stroke="#ff0066"
-                        strokeWidth="1"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </motion.svg>
+                   <ArrowTop/>
                   </motion.div>
                   <motion.div
                     className="absolute bottom-[10%] right-[10%] text-white font-medium rotate-[15deg] text-[#ff0066]"
@@ -215,48 +185,20 @@ export default function Home() {
                       delay: 0.5,
                     }}
                   >
-                    Christian
-                    <motion.svg
-                      className="absolute -top-6 -left-6 w-16 h-16 rotate-[210deg]"
-                      viewBox="0 0 24 24"
-                     
-                      xmlns="http://www.w3.org/2000/svg"
-                      animate={{ x: [0, -5, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Number.POSITIVE_INFINITY,
-                        repeatType: "reverse",
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <path
-d="M94.2118 26.3203C94.941 25.9272 95.2135 25.0174 94.8203 24.2882C94.4272 23.559 93.5174 23.2865 92.7882 23.6797L94.2118 26.3203ZM6.41208 0.557714C5.61553 0.330128 4.7853 0.791366 4.55771 1.58792L0.848979 14.5685C0.621392 15.365 1.08263 16.1953 1.87918 16.4229C2.67574 16.6504 3.50596 16.1892 3.73355 15.3927L7.0302 3.85437L18.5685 7.15102C19.365 7.37861 20.1953 6.91737 20.4229 6.12082C20.6504 5.32426 20.1892 4.49404 19.3927 4.26645L6.41208 0.557714ZM92.7882 23.6797C83.4023 28.7399 67.8262 33.6878 51.7112 32.0824C35.6889 30.4862 19.057 22.4139 7.31124 1.27154L4.68876 2.72846C16.943 24.7861 34.4778 33.3804 51.4138 35.0676C68.2571 36.7456 84.431 31.5935 94.2118 26.3203L92.7882 23.6797Z" 
-                        stroke="#ff0066"
-                        strokeWidth="1"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </motion.svg>
+                    <ArrowBottom/>
                   </motion.div>
                 </div>
               </motion.div>
             </div>
           </div>
-          <motion.div
-            className="absolute inset-0 opacity-10 z-0 w-screen h-screen bg-center bg-no-repeat bg-cover mix-blend-multiply"
-            style={{
-              backgroundImage: "url('/texture.png')",
-              backgroundPosition: "top",
-              y: textureY,
-            }}
-          ></motion.div>
+      
         </section>
 
         {/* Was wir machen Section with Map */}
         <section
           ref={mapRef}
           id="was-wir-machen"
-          className="bg-[#ffcc00] py-16 md:py-24 relative h-[720px] overflow-hidden"
+          className="bg-[#ffcc00] py-16 md:py-24 relative h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/02.png')]"
         >
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -316,26 +258,20 @@ d="M94.2118 26.3203C94.941 25.9272 95.2135 25.0174 94.8203 24.2882C94.4272 23.55
             </div>
           </div>
           <motion.div
-            className="absolute inset-0 opacity-40 z-0 bg-center bg-no-repeat bg-contain mix-blend-multiply"
+            className="absolute inset-0 opacity-40 z-0 bg-center bg-no-repeat bg-contain "
             style={{
-              backgroundImage: "url('/bg.jpg')",
+              backgroundImage: "url('/bg.png')",
               backgroundPosition: "center",
               opacity: mapOpacity,
               scale: mapScale,
             }}
           ></motion.div>
-          <motion.div
-            className="absolute opacity-10 z-0 w-screen h-[720px] bg-center bg-no-repeat bg-cover mix-blend-multiply"
-            style={{
-              backgroundImage: "url('/texture.png')",
-              backgroundPosition: "top",
-              y: textureY,
-            }}
-          ></motion.div>
+        
         </section>
 
         {/* Shorts Section */}
-        <section ref={shortsRef} id="shorts" className="bg-[#ff0066] py-16 md:py-24 h-[880px] overflow-hidden">
+        <section ref={shortsRef} id="shorts" className="bg-[#ff0066] py-16 md:py-24 h-[880px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/03.png')]">
+        
           <div className="container mx-auto">
             <AnimatedSection direction="up" className="flex justify-between items-center mb-8">
               <div>
@@ -400,8 +336,8 @@ d="M94.2118 26.3203C94.941 25.9272 95.2135 25.0174 94.8203 24.2882C94.4272 23.55
           </div>
         </section>
 
-        {/* Instagram Section */}
-        <section ref={instagramRef} id="folgen" className="bg-[#f8f3e9] py-16 md:py-24 h-[720px] overflow-hidden">
+        {/* About Us Section */}
+        <section ref={instagramRef} id="folgen" className="bg-[#f8f3e9] py-16 md:py-24 h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]">
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <AnimatedSection direction="left" className="space-y-6">
@@ -426,16 +362,16 @@ d="M94.2118 26.3203C94.941 25.9272 95.2135 25.0174 94.8203 24.2882C94.4272 23.55
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInstagramInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                 
                 >
                   <Link
                     href="https://instagram.com"
-                    className="inline-flex items-center text-[#ff0066] hover:underline"
+                    className="inline-flex items-center text-black bg-white rounded-full px-6 h-10 hover:scale-120 transition-all"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Instagram className="mr-2" size={20} />
+                    <Instagram className="mr-2 text-[#ff0066]" size={20} />
                     Jetzt folgen
                   </Link>
                 </motion.div>
@@ -495,19 +431,12 @@ d="M94.2118 26.3203C94.941 25.9272 95.2135 25.0174 94.8203 24.2882C94.4272 23.55
               </div>
             </div>
           </div>
-          <motion.div
-            className="absolute opacity-10 z-0 w-screen h-[720px] bg-center bg-no-repeat bg-cover mix-blend-multiply"
-            style={{
-              backgroundImage: "url('/texture.png')",
-              backgroundPosition: "top",
-              y: textureY,
-            }}
-          ></motion.div>
+       
         </section>
       </main>
 
       <motion.footer
-        className="border-t border-[#e0d9cc] py-6 overflow-hidden relative"
+        className="border-t border-[#e0d9cc] py-6 overflow-hidden relative bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -526,14 +455,7 @@ d="M94.2118 26.3203C94.941 25.9272 95.2135 25.0174 94.8203 24.2882C94.4272 23.55
             </motion.div>
           </div>
         </div>
-        <motion.div
-          className="absolute opacity-10 z-0 w-screen h-[64px] bg-center bg-no-repeat bg-cover mix-blend-multiply"
-          style={{
-            backgroundImage: "url('/texture.png')",
-            backgroundPosition: "top",
-            y: textureY,
-          }}
-        ></motion.div>
+      
       </motion.footer>
     </div>
   )
