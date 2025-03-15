@@ -6,7 +6,7 @@ import Link from "next/link"
 import { ChevronLeft, ChevronRight, Instagram, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ShortsCarousel from "@/components/shorts-carousel"
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useTransform, useInView, AnimatePresence, useDragControls } from "framer-motion"
 import { AnimatedSection } from "@/components/animated-section"
 import { AudioPlayer } from "@/components/audio-player"
 import { useMobile } from "@/hooks/use-mobile"
@@ -33,6 +33,8 @@ export default function Home() {
   const isShortsInView = useInView(shortsRef, { once: false, amount: 0.3 })
   const isInstagramInView = useInView(instagramRef, { once: false, amount: 0.3 })
 
+  const controls = useDragControls()
+
   // Parallax effect for texture background
   const textureY = useTransform(scrollYProgress, [0, 1], [0, 300])
 
@@ -55,7 +57,7 @@ export default function Home() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <motion.div className="font-bold text-lg font-roboto" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <motion.div className="font-bold " whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           Planquadrat
         </motion.div>
 
@@ -92,7 +94,7 @@ export default function Home() {
         </div>
 
         <motion.div className="hidden md:block" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Button variant="outline" className="rounded-full text-sm px-6 font-roboto">
+          <Button variant="outline" className="rounded-full bg-white text-sm px-6 font-roboto">
             Kontakt
           </Button>
         </motion.div>
@@ -150,7 +152,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <AnimatedSection direction="left" delay={0.2} className="space-y-6 z-10">
               <motion.h1
-                className="text-3xl md:text-5xl lg:text-6xl max-w-[560px] font-robotoSlab leading-tight"
+                className="text-4xl md:text-5xl lg:text-6xl max-w-[560px] font-robotoSlab leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -186,7 +188,7 @@ export default function Home() {
                 mit
               </motion.h1>
               <motion.p
-                className="text-gray-600 max-w-md font-roboto"
+                className="text-gray-600 max-w-md text-lg font-roboto"
                 initial={{ opacity: 0 }}
                 animate={isHeroInView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -321,7 +323,7 @@ export default function Home() {
                 </AnimatedSection>
               ) : (
                 // Mobile: Stats below text
-                <AnimatedSection direction="up" delay={0.3} className="flex flex-wrap justify-center gap-8 mt-6 z-10">
+                <AnimatedSection direction="up" delay={0.3} className="flex flex-wrap justify-start gap-8 mt-2 z-10">
                   {[
                     { number: "9000", label: "Quadrate" },
                     { number: "2", label: "Freunde" },
@@ -380,7 +382,7 @@ export default function Home() {
           ref={shortsRef}
           id="shorts"
           className="bg-[#ff0066] py-8 md:py-16 overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/03.png')]"
-          style={{ height: isMobile ? "auto" : "880px" }} // Reduced height
+          style={{ height: isMobile ? "auto" : "720px" }} 
         >
           <div className="container mx-auto">
             <AnimatedSection
@@ -497,63 +499,22 @@ export default function Home() {
                 </motion.div>
               </AnimatedSection>
 
-              {/* Images with 1:1 aspect ratio */}
-              <div className={`relative ${isMobile ? "h-[300px] mt-8" : "h-96"}`}>
-                <AnimatePresence>
-                  {isInstagramInView && (
-                    <>
-                      <motion.div
-                        className={`absolute ${isMobile ? "w-[60%] h-[60%]" : "w-[50%] h-[50%]"} top-0 right-0 transform rotate-6`}
-                        initial={{ opacity: 0, x: 100, rotate: 12 }}
-                        animate={{ opacity: 1, x: 0, rotate: 6 }}
-                        transition={{ duration: 0.7, delay: 0.1, type: "spring" }}
-                        whileHover={{ rotate: 8, scale: 1.02 }}
-                      >
-                        <div className="w-full h-full relative aspect-square">
-                          <Image
-                            src="/portraits/01.png"
-                            alt="Instagram photo 1"
-                            fill
-                            className="object-cover border-8 border-white shadow-lg"
-                          />
-                        </div>
-                      </motion.div>
-                      <motion.div
-                        className={`absolute ${isMobile ? "w-[50%] h-[50%]" : "w-[40%] h-[40%]"} top-[30%] right-[30%] transform -rotate-3 z-10`}
-                        initial={{ opacity: 0, x: -100, rotate: -8 }}
-                        animate={{ opacity: 1, x: 0, rotate: -3 }}
-                        transition={{ duration: 0.7, delay: 0.3, type: "spring" }}
-                        whileHover={{ rotate: -5, scale: 1.02 }}
-                      >
-                        <div className="w-full h-full relative aspect-square">
-                          <Image
-                            src="/portraits/02.png"
-                            alt="Instagram photo 2"
-                            fill
-                            className="object-cover border-8 border-white shadow-lg"
-                          />
-                        </div>
-                      </motion.div>
-                      <motion.div
-                        className={`absolute ${isMobile ? "w-[40%] h-[40%]" : "w-[30%] h-[30%]"} bottom-0 left-[20%] transform rotate-[-8deg] z-20`}
-                        initial={{ opacity: 0, y: 100, rotate: -15 }}
-                        animate={{ opacity: 1, y: 0, rotate: -8 }}
-                        transition={{ duration: 0.7, delay: 0.5, type: "spring" }}
-                        whileHover={{ rotate: -10, scale: 1.02 }}
-                      >
-                        <div className="w-full h-full relative aspect-square">
-                          <Image
-                            src="/portraits/03.png"
-                            alt="Instagram photo 3"
-                            fill
-                            className="object-cover border-8 border-white shadow-lg"
-                          />
-                        </div>
-                      </motion.div>
-                    </>
-                  )}
-                </AnimatePresence>
-              </div>
+              <div className="relative h-[400px]">
+          {["/portraits/01.png", "/portraits/02.png", "/portraits/03.png"].map((src, index) => (
+            <motion.div
+              key={index}
+              className="absolute w-64 h-64"
+              drag
+              dragControls={controls}
+              dragElastic={0.2}
+              dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
+            >
+              <Image src={src} alt={`Instagram photo ${index + 1}`} width={160} height={160} className="rounded-xl   border-4 border-white shadow-lg" />
+              
+              
+            </motion.div>
+          ))}
+        </div>
             </div>
           </div>
         </section>

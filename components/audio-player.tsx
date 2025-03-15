@@ -149,7 +149,7 @@ export function AudioPlayer({ audioSrc, className }: AudioPlayerProps) {
             
             <span className="mr-1 relative z-10 font-roboto">
               
-              {isPlaying ? "Pause" : "Audio hören"}
+              {isPlaying ? "Pause" : "Erzähl mir mehr"}
             </span>
             
             {isPlaying && (
