@@ -227,7 +227,7 @@ export default function Home() {
 
                   {/* Arrows - shown on both mobile and desktop */}
                   <motion.div
-                    className={`${isMobile ? "absolute top-[-15%] left-[-15%] w-[80px]" : "absolute top-[10%] left-[10%]"} text-white font-medium rotate-[-15deg] text-[#ff0066]`}
+                    className={`${isMobile ? "absolute top-[-5%] left-[-15%] w-[80px]" : "absolute top-[10%] left-[10%]"} text-white font-medium rotate-[-15deg] text-[#ff0066]`}
                     animate={{
                       y: [0, -10, 0],
                       rotate: [-15, -12, -15],
@@ -242,7 +242,7 @@ export default function Home() {
                     <ArrowTop className={isMobile ? "w-[60px] h-auto" : ""} />
                   </motion.div>
                   <motion.div
-                    className={`${isMobile ? "absolute bottom-[-10%] right-[-15%] w-[100px]" : "absolute bottom-[1%] right-[5%]"} text-white font-medium rotate-[15deg] text-[#ff0066]`}
+                    className={`${isMobile ? "absolute bottom-[5%] right-[-15%] w-[100px]" : "absolute bottom-[1%] right-[5%]"} text-white font-medium rotate-[15deg] text-[#ff0066]`}
                     animate={{
                       y: [0, 10, 0],
                       rotate: [15, 18, 15],
