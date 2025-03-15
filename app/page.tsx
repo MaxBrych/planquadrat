@@ -214,7 +214,7 @@ export default function Home() {
                 <div className="relative w-full h-full">
                   <motion.div
                     className={`${isMobile ? "w-[280px] h-[280px]" : "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px]"} overflow-hidden`}
-                    whileHover={{ scale: 1.05 }}
+                    
                   >
                     <Image
                       src="/hero.png"
@@ -267,7 +267,7 @@ export default function Home() {
         <section
           ref={mapRef}
           id="was-wir-machen"
-          className="bg-[#ffcc00] py-8 md:py-24 relative min-h-[600px] md:h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/02.png')]"
+          className="bg-[#ffcc00] py-8 md:py-24 relative min-h-[600px] md:h-[800px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]"
         >
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -310,16 +310,8 @@ export default function Home() {
                     >
                       <motion.div
                         className="text-4xl font-bold"
-                        animate={{
-                          scale: [1, 1.1, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Number.POSITIVE_INFINITY,
-                          repeatType: "reverse",
-                          ease: "easeInOut",
-                          delay: index * 0.3,
-                        }}
+                       
+                    
                       >
                         {item.number}
                       </motion.div>
