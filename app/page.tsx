@@ -1,24 +1,25 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Play, ChevronLeft, ChevronRight, Instagram } from "lucide-react"
+import { ChevronLeft, ChevronRight, Instagram, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ShortsCarousel from "@/components/shorts-carousel"
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
 import { AnimatedSection } from "@/components/animated-section"
 import { AudioPlayer } from "@/components/audio-player"
-import ArrowBottom from "@/components/svg/02"
+import { useMobile } from "@/hooks/use-mobile"
 import ArrowTop from "@/components/svg/01"
-
-
+import ArrowBottom from "@/components/svg/02"
 
 export default function Home() {
   const heroRef = useRef(null)
   const mapRef = useRef(null)
   const shortsRef = useRef(null)
   const instagramRef = useRef(null)
+  const isMobile = useMobile()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const { scrollYProgress } = useScroll()
   const heroImageScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.2])
@@ -35,11 +36,21 @@ export default function Home() {
   // Parallax effect for texture background
   const textureY = useTransform(scrollYProgress, [0, 1], [0, 300])
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+  }
+
+  // Close mobile menu when clicking on a link
+  const handleNavLinkClick = () => {
+    if (mobileMenuOpen) {
+      setMobileMenuOpen(false)
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-[#f8f3e9] w-screen overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]">
       <motion.header
         className="container mx-auto py-4 border-b border-[#e0d9cc] h-[64px] bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')] flex items-center justify-between overflow-hidden"
-        
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -47,6 +58,8 @@ export default function Home() {
         <motion.div className="font-medium text-lg" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           Planquadrat
         </motion.div>
+
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {["Was wir machen", "Shorts", "Folgen"].map((item, index) => (
             <motion.div
@@ -55,28 +68,89 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.5 }}
             >
-              <Link href={`#${item.toLowerCase().replace(/\s+/g, "-")}`} className="text-sm hover:underline">
+              <Link
+                href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                className="text-sm hover:underline"
+                onClick={handleNavLinkClick}
+              >
                 {item}
               </Link>
             </motion.div>
           ))}
         </nav>
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden flex items-center">
+          <motion.button
+            onClick={toggleMobileMenu}
+            className="p-2"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </motion.button>
+        </div>
+
+        <motion.div className="hidden md:block" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button variant="outline" className="rounded-full text-sm px-6">
             Kontakt
           </Button>
         </motion.div>
-       
       </motion.header>
+
+      {/* Mobile Navigation Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed inset-0 bg-[#f8f3e9] z-50 pt-20 px-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex flex-col space-y-6 items-center">
+              {["Was wir machen", "Shorts", "Folgen"].map((item, index) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * index, duration: 0.3 }}
+                  className="text-xl font-medium"
+                >
+                  <Link
+                    href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                    className="hover:text-[#ff0066]"
+                    onClick={handleNavLinkClick}
+                  >
+                    {item}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.3 }}
+                className="mt-6"
+              >
+                <Button variant="outline" className="rounded-full text-sm px-6">
+                  Kontakt
+                </Button>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section ref={heroRef} className="container mx-auto py-16 md:py-24 relative h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]">
-          
+        <section
+          ref={heroRef}
+          className="container mx-auto py-8 md:py-24 relative min-h-[500px] md:h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <AnimatedSection direction="left" delay={0.2} className="space-y-6">
+            <AnimatedSection direction="left" delay={0.2} className="space-y-6 z-10">
               <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl max-w-[560px] font-serif leading-tight"
+                className="text-3xl md:text-5xl lg:text-6xl max-w-[560px] font-serif leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -121,90 +195,87 @@ export default function Home() {
                 labore et dolore magna aliquyam erat, sed diam voluptua.
               </motion.p>
               <motion.div
-                                className="flex space-x-4 items-center"
-
+                className="flex space-x-4 items-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                 <AudioPlayer audioSrc="/audio.mp3" />
-               
-              
+                <AudioPlayer audioSrc="/audio.mp3" />
               </motion.div>
             </AnimatedSection>
-            <div className="relative h-80 md:h-96">
+            <div className={`relative ${isMobile ? "h-64 mt-8" : "h-80 md:h-96"}`}>
               <motion.div
-                className="absolute top-0 right-0 w-full h-full md:w-[120%] md:-right-[10%]"
+                className={`absolute ${isMobile ? "top-0 left-1/2 transform -translate-x-1/2" : "top-0 right-0 w-full h-full md:w-[120%] md:-right-[10%]"}`}
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 animate={isHeroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
                 transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
                 style={{ scale: heroImageScale, rotate: heroImageRotate }}
               >
                 <div className="relative w-full h-full">
-                 
                   <motion.div
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] overflow-hidden"
+                    className={`absolute ${isMobile ? "w-[280px] h-[280px]" : "top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px]"} overflow-hidden`}
                     whileHover={{ scale: 1.05 }}
                   >
                     <Image
                       src="/hero.png"
                       alt="Christian und Christian"
-                      width={500}
-                      height={500}
-                      className="w-[480px] h-[480px] object-cover"
+                      width={isMobile ? 280 : 480}
+                      height={isMobile ? 280 : 480}
+                      className={`${isMobile ? "w-[280px] h-[280px]" : "w-[480px] h-[480px]"} object-cover`}
                     />
                   </motion.div>
-                  <motion.div
-                    className="absolute top-[10%] left-[10%] text-white font-medium rotate-[-15deg] text-[#ff0066]"
-                    
-                    animate={{
-                      y: [0, -10, 0],
-                      rotate: [-15, -12, -15],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Number.POSITIVE_INFINITY,
-                      repeatType: "reverse",
-                      ease: "easeInOut",
-                    }}
-                  >
-                    
-                   <ArrowTop/>
-                  </motion.div>
-                  <motion.div
-                    className="absolute bottom-[10%] right-[10%] text-white font-medium rotate-[15deg] text-[#ff0066]"
-                    animate={{
-                      y: [0, 10, 0],
-                      rotate: [15, 18, 15],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Number.POSITIVE_INFINITY,
-                      repeatType: "reverse",
-                      ease: "easeInOut",
-                      delay: 0.5,
-                    }}
-                  >
-                    <ArrowBottom/>
-                  </motion.div>
+                  {!isMobile && (
+                    <>
+                      <motion.div
+                        className="absolute top-[10%] left-[10%] text-white font-medium rotate-[-15deg] text-[#ff0066]"
+                        animate={{
+                          y: [0, -10, 0],
+                          rotate: [-15, -12, -15],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Number.POSITIVE_INFINITY,
+                          repeatType: "reverse",
+                          ease: "easeInOut",
+                        }}
+                      >
+                       <ArrowTop/>
+                      </motion.div>
+                      <motion.div
+                        className="absolute bottom-[1%] right-[5%] text-white font-medium rotate-[15deg] text-[#ff0066]"
+                        animate={{
+                          y: [0, 10, 0],
+                          rotate: [15, 18, 15],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Number.POSITIVE_INFINITY,
+                          repeatType: "reverse",
+                          ease: "easeInOut",
+                          delay: 0.5,
+                        }}
+                      >
+                      <ArrowBottom/>
+                      </motion.div>
+                    </>
+                  )}
                 </div>
               </motion.div>
             </div>
           </div>
-      
         </section>
 
         {/* Was wir machen Section with Map */}
         <section
           ref={mapRef}
           id="was-wir-machen"
-          className="bg-[#ffcc00] py-16 md:py-24 relative h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/02.png')]"
+          className="bg-[#ffcc00] py-8 md:py-24 relative min-h-[600px] md:h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/02.png')]"
         >
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <AnimatedSection direction="up" className="space-y-6 z-10">
                 <motion.h2
-                  className="text-3xl md:text-4xl font-serif"
+                  className="text-2xl md:text-4xl font-serif"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isMapInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8 }}
@@ -222,61 +293,125 @@ export default function Home() {
                   et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
                 </motion.p>
               </AnimatedSection>
-              <AnimatedSection direction="down" delay={0.3} className="flex justify-end items-start space-x-12 z-10">
-                {[
-                  { number: "9000", label: "Quadrate" },
-                  { number: "2", label: "Freunde" },
-                  { number: "1", label: "Bundesland" },
-                ].map((item, index) => (
-                  <motion.div
-                    key={item.label}
-                    className="text-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isMapInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                    whileHover={{ scale: 1.1 }}
-                  >
+
+              {!isMobile ? (
+                // Desktop: Stats in right column
+                <AnimatedSection direction="down" delay={0.3} className="flex justify-end items-start space-x-12 z-10">
+                  {[
+                    { number: "9000", label: "Quadrate" },
+                    { number: "2", label: "Freunde" },
+                    { number: "1", label: "Bundesland" },
+                  ].map((item, index) => (
                     <motion.div
-                      className="text-4xl font-bold"
-                      animate={{
-                        scale: [1, 1.1, 1],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Number.POSITIVE_INFINITY,
-                        repeatType: "reverse",
-                        ease: "easeInOut",
-                        delay: index * 0.3,
-                      }}
+                      key={item.label}
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isMapInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                      whileHover={{ scale: 1.1 }}
                     >
-                      {item.number}
+                      <motion.div
+                        className="text-4xl font-bold"
+                        animate={{
+                          scale: [1, 1.1, 1],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Number.POSITIVE_INFINITY,
+                          repeatType: "reverse",
+                          ease: "easeInOut",
+                          delay: index * 0.3,
+                        }}
+                      >
+                        {item.number}
+                      </motion.div>
+                      <div className="text-sm">{item.label}</div>
                     </motion.div>
-                    <div className="text-sm">{item.label}</div>
-                  </motion.div>
-                ))}
-              </AnimatedSection>
+                  ))}
+                </AnimatedSection>
+              ) : (
+                // Mobile: Stats below text
+                <AnimatedSection direction="up" delay={0.3} className="flex flex-wrap justify-center gap-8 mt-6 z-10">
+                  {[
+                    { number: "9000", label: "Quadrate" },
+                    { number: "2", label: "Freunde" },
+                    { number: "1", label: "Bundesland" },
+                  ].map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isMapInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <motion.div
+                        className="text-3xl font-bold"
+                        animate={{
+                          scale: [1, 1.1, 1],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Number.POSITIVE_INFINITY,
+                          repeatType: "reverse",
+                          ease: "easeInOut",
+                          delay: index * 0.3,
+                        }}
+                      >
+                        {item.number}
+                      </motion.div>
+                      <div className="text-sm">{item.label}</div>
+                    </motion.div>
+                  ))}
+                </AnimatedSection>
+              )}
             </div>
+
+            {/* Map Image - Background on desktop, regular image on mobile */}
+            {!isMobile ? (
+              <motion.div
+                className="absolute inset-0 opacity-40 z-0 bg-center bg-no-repeat bg-contain"
+                style={{
+                  backgroundImage: "url('/bg.png')",
+                  backgroundPosition: "center",
+                  opacity: mapOpacity,
+                  scale: mapScale,
+                }}
+              ></motion.div>
+            ) : (
+              <motion.div
+                className="mt-8 mx-auto max-w-md"
+                initial={{ opacity: 0, y: 30 }}
+                animate={isMapInView ? { opacity: 0.6, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <Image
+                  src="/bg.png"
+                  alt="Map of MV"
+                  width={400}
+                  height={300}
+                  className="w-full h-auto object-contain"
+                />
+              </motion.div>
+            )}
           </div>
-          <motion.div
-            className="absolute inset-0 opacity-40 z-0 bg-center bg-no-repeat bg-contain "
-            style={{
-              backgroundImage: "url('/bg.png')",
-              backgroundPosition: "center",
-              opacity: mapOpacity,
-              scale: mapScale,
-            }}
-          ></motion.div>
-        
         </section>
 
-        {/* Shorts Section */}
-        <section ref={shortsRef} id="shorts" className="bg-[#ff0066] py-16 md:py-24 h-[880px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/03.png')]">
-        
+        {/* Shorts Section - Reduced size */}
+        <section
+          ref={shortsRef}
+          id="shorts"
+          className="bg-[#ff0066] py-8 md:py-16 overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/03.png')]"
+          style={{ height: isMobile ? "auto" : "880px" }} // Reduced height
+        >
           <div className="container mx-auto">
-            <AnimatedSection direction="up" className="flex justify-between items-center mb-8">
+            <AnimatedSection
+              direction="up"
+              className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8"
+            >
               <div>
                 <motion.h2
-                  className="text-3xl md:text-4xl font-serif text-white"
+                  className="text-2xl md:text-4xl font-serif text-white"
                   initial={{ opacity: 0, x: -20 }}
                   animate={isShortsInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5 }}
@@ -284,7 +419,7 @@ export default function Home() {
                   Shorts
                 </motion.h2>
                 <motion.p
-                  className="text-white/80 max-w-md"
+                  className="text-white/80 max-w-md mt-2"
                   initial={{ opacity: 0 }}
                   animate={isShortsInView ? { opacity: 1 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 }}
@@ -293,9 +428,9 @@ export default function Home() {
                 </motion.p>
               </div>
               <motion.div
-                className="flex space-x-2"
-                initial={{ opacity: 0, x: 20 }}
-                animate={isShortsInView ? { opacity: 1, x: 0 } : {}}
+                className="flex space-x-2 mt-4 md:mt-0"
+                initial={{ opacity: 0, x: isMobile ? 0 : 20, y: isMobile ? 20 : 0 }}
+                animate={isShortsInView ? { opacity: 1, x: 0, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
@@ -328,6 +463,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 50 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
+                  className="pb-8 md:pb-0" // Add padding on mobile
                 >
                   <ShortsCarousel />
                 </motion.div>
@@ -337,12 +473,17 @@ export default function Home() {
         </section>
 
         {/* About Us Section */}
-        <section ref={instagramRef} id="folgen" className="bg-[#f8f3e9] py-16 md:py-24 h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]">
+        <section
+          ref={instagramRef}
+          id="folgen"
+          className="bg-[#f8f3e9] py-8 md:py-24 overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]"
+          style={{ height: isMobile ? "auto" : "720px" }}
+        >
           <div className="container mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <AnimatedSection direction="left" className="space-y-6">
                 <motion.h2
-                  className="text-3xl md:text-4xl font-serif"
+                  className="text-2xl md:text-4xl font-serif"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInstagramInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5 }}
@@ -363,7 +504,6 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInstagramInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                 
                 >
                   <Link
                     href="https://instagram.com"
@@ -376,54 +516,59 @@ export default function Home() {
                   </Link>
                 </motion.div>
               </AnimatedSection>
-              <div className="relative h-96">
+
+              {/* Images with 1:1 aspect ratio */}
+              <div className={`relative ${isMobile ? "h-[300px] mt-8" : "h-96"}`}>
                 <AnimatePresence>
                   {isInstagramInView && (
                     <>
                       <motion.div
-                        className="absolute w-[80%] h-[60%] top-0 right-0 transform rotate-6"
+                        className={`absolute ${isMobile ? "w-[60%] h-[60%]" : "w-[50%] h-[50%]"} top-0 right-0 transform rotate-6`}
                         initial={{ opacity: 0, x: 100, rotate: 12 }}
                         animate={{ opacity: 1, x: 0, rotate: 6 }}
                         transition={{ duration: 0.7, delay: 0.1, type: "spring" }}
                         whileHover={{ rotate: 8, scale: 1.02 }}
                       >
-                        <Image
-                          src="/portraits/01.png"
-                          alt="Instagram photo 1"
-                          width={400}
-                          height={400}
-                          className="w-full h-full object-cover border-8 border-white shadow-lg"
-                        />
+                        <div className="w-full h-full relative aspect-square">
+                          <Image
+                            src="/portraits/01.png"
+                            alt="Instagram photo 1"
+                            fill
+                            className="object-cover border-8 border-white shadow-lg"
+                          />
+                        </div>
                       </motion.div>
                       <motion.div
-                        className="absolute w-[60%] h-[50%] top-[30%] right-[30%] transform -rotate-3 z-10"
+                        className={`absolute ${isMobile ? "w-[50%] h-[50%]" : "w-[40%] h-[40%]"} top-[30%] right-[30%] transform -rotate-3 z-10`}
                         initial={{ opacity: 0, x: -100, rotate: -8 }}
                         animate={{ opacity: 1, x: 0, rotate: -3 }}
                         transition={{ duration: 0.7, delay: 0.3, type: "spring" }}
                         whileHover={{ rotate: -5, scale: 1.02 }}
                       >
-                        <Image
-                          src="/portraits/02.png"
-                          alt="Instagram photo 2"
-                          width={400}
-                          height={400}
-                          className="w-full h-full object-cover border-8 border-white shadow-lg"
-                        />
+                        <div className="w-full h-full relative aspect-square">
+                          <Image
+                            src="/portraits/02.png"
+                            alt="Instagram photo 2"
+                            fill
+                            className="object-cover border-8 border-white shadow-lg"
+                          />
+                        </div>
                       </motion.div>
                       <motion.div
-                        className="absolute w-[40%] h-[40%] bottom-0 left-[20%] transform rotate-[-8deg] z-20"
+                        className={`absolute ${isMobile ? "w-[40%] h-[40%]" : "w-[30%] h-[30%]"} bottom-0 left-[20%] transform rotate-[-8deg] z-20`}
                         initial={{ opacity: 0, y: 100, rotate: -15 }}
                         animate={{ opacity: 1, y: 0, rotate: -8 }}
                         transition={{ duration: 0.7, delay: 0.5, type: "spring" }}
                         whileHover={{ rotate: -10, scale: 1.02 }}
                       >
-                        <Image
-                          src="/portraits/03.png"
-                          alt="Instagram photo 3"
-                          width={300}
-                          height={300}
-                          className="w-full h-full object-cover border-8 border-white shadow-lg"
-                        />
+                        <div className="w-full h-full relative aspect-square">
+                          <Image
+                            src="/portraits/03.png"
+                            alt="Instagram photo 3"
+                            fill
+                            className="object-cover border-8 border-white shadow-lg"
+                          />
+                        </div>
                       </motion.div>
                     </>
                   )}
@@ -431,7 +576,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-       
         </section>
       </main>
 
@@ -455,7 +599,6 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-      
       </motion.footer>
     </div>
   )
