@@ -208,7 +208,7 @@ export default function Home() {
             <div className={`relative ${isMobile ? "h-[320px] mt-8 flex justify-center" : "h-80 md:h-96"}`}>
               <motion.div
                 className={`${isMobile ? "relative" : "absolute top-0 right-0 w-full h-full md:w-[120%] md:-right-[10%]"}`}
-                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                initial={{ opacity: 0}}
                 animate={isHeroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
                 transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
                 style={isMobile ? {} : { }}
@@ -453,71 +453,33 @@ export default function Home() {
         </section>
 
         {/* About Us Section */}
-        <section
-          ref={instagramRef}
-          id="folgen"
-          className="bg-[#f8f3e9] py-8 md:py-24 overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]"
-          style={{ height: isMobile ? "auto" : "720px" }}
-        >
-          <div className="container mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <AnimatedSection direction="left" className="space-y-6">
-                <motion.h2
-                  className="text-2xl md:text-4xl font-robotoSlab"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInstagramInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5 }}
-                >
-                  Was wir machen
-                </motion.h2>
-                <motion.p
-                  className="text-gray-600 max-w-md font-roboto"
-                  
-                  initial={{ opacity: 0 }}
-                  animate={isInstagramInView ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                  labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                  et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInstagramInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <Link
-                    href="https://instagram.com"
-                    className="inline-flex items-center text-black bg-white font-roboto font-medium text-sm rounded-full px-6 h-10 hover:scale-120 transition-all"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Instagram className="mr-2 text-[#ff0066] font-bold font-roboto" size={20} />
-                    
-                    Jetzt folgen
-                  </Link>
-                </motion.div>
-              </AnimatedSection>
-
-              <div className="relative h-[400px]">
-          {["/portraits/01.png", "/portraits/02.png", "/portraits/03.png"].map((src, index) => (
-            <motion.div
-              key={index}
-              className="absolute w-64 h-64"
-              drag
-              dragControls={controls}
-              dragElastic={0.2}
-              dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
-            >
-              <Image src={src} alt={`Instagram photo ${index + 1}`} width={160} height={160} className="rounded-xl   border-4 border-white shadow-lg" />
-              
-              
-            </motion.div>
-          ))}
-        </div>
-            </div>
-          </div>
-        </section>
+        <section id="folgen" className="bg-[#f8f3e9] py-8 md:py-24 overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]">
+  <div className="container mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="space-y-6">
+        <motion.h2 className="text-2xl md:text-4xl font-robotoSlab" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          Was wir machen
+        </motion.h2>
+        <motion.p className="text-gray-600 max-w-md font-roboto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+        </motion.p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
+          <Link href="https://instagram.com" className="inline-flex items-center text-black bg-white font-roboto font-medium text-sm rounded-full px-6 h-10 hover:scale-110 transition-all" target="_blank" rel="noopener noreferrer">
+          <Instagram className="mr-2 text-[#ff0066] font-bold font-roboto" size={20} />
+            Jetzt folgen
+          </Link>
+        </motion.div>
+      </div>
+      <div className="relative h-[400px] flex justify-center items-center">
+      {["/portraits/01.png", "/portraits/02.png", "/portraits/03.png"].map((src, index) => (
+          <motion.div key={index} className="absolute w-64 h-64 md:w-96 md:h-96" drag dragConstraints={{ left: -150, right: 150, top: -150, bottom: 150 }} dragElastic={0.1}>
+            <Image src={src} alt={`Instagram photo ${index + 1}`} width={160} height={160} className="rounded-xl border-4 border-white shadow-lg" />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
       </main>
 
       <motion.footer
