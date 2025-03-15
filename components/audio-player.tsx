@@ -147,7 +147,8 @@ export function AudioPlayer({ audioSrc, className }: AudioPlayerProps) {
               )}
             </AnimatePresence>
             
-            <span className="mr-1 relative z-10">
+            <span className="mr-1 relative z-10 font-roboto">
+              
               {isPlaying ? "Pause" : "Audio hören"}
             </span>
             

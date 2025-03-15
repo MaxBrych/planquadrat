@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Roboto_Slab } from "next/font/google"
+import { Inter, Roboto, Roboto_Slab } from 'next/font/google'
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -9,7 +9,13 @@ const inter = Inter({
   variable: "--font-sans",
 })
 
-const roboto = Roboto_Slab({
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-roboto",
+})
+
+const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
   variable: "--font-serif",
 })
@@ -26,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" suppressHydrationWarning>
-      <body className={` ${roboto.variable} font-sans`}>
+      <body className={`${roboto.variable} ${robotoSlab.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
           {children}
         </ThemeProvider>
@@ -34,7 +40,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-
-import './globals.css'

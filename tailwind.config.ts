@@ -55,8 +55,9 @@ const config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
+        sans: ["var(--font-sans)", "var(--font-roboto)", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+        roboto: ["var(--font-roboto)", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -83,4 +84,3 @@ const config = {
 } satisfies Config
 
 export default config
-

@@ -147,7 +147,7 @@ export default function ShortsCarousel() {
   }, [currentIndex])
 
   return (
-    <div ref={carouselRef} className=" h-[640px]">
+    <div ref={carouselRef} className=" h-[480px]">
       <div
         className="flex transition-transform duration-300 ease-in-out gap-4 "
         style={{ transform: `translateX(-${currentIndex * (100 / maxVisibleItems)}%)` }}
@@ -158,7 +158,7 @@ export default function ShortsCarousel() {
             href={short.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 relative group h-[640px]"
+            className="flex-shrink-0 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 relative group h-[560px]"
           >
             <div className="bg-[#ff0066] border-4 border-[#ff0066] rounded-2xl overflow-hidden relative aspect-[9/16]">
               <Image

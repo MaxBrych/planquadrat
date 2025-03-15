@@ -55,7 +55,7 @@ export default function Home() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <motion.div className="font-medium text-lg" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <motion.div className="font-bold text-lg font-roboto" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           Planquadrat
         </motion.div>
 
@@ -70,7 +70,7 @@ export default function Home() {
             >
               <Link
                 href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                className="text-sm hover:underline"
+                className="text-sm hover:underline font-roboto"
                 onClick={handleNavLinkClick}
               >
                 {item}
@@ -92,7 +92,7 @@ export default function Home() {
         </div>
 
         <motion.div className="hidden md:block" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Button variant="outline" className="rounded-full text-sm px-6">
+          <Button variant="outline" className="rounded-full text-sm px-6 font-roboto">
             Kontakt
           </Button>
         </motion.div>
@@ -108,7 +108,7 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex flex-col space-y-6 items-center">
+            <div className="flex flex-col space-y-6 items-center ">
               {["Was wir machen", "Shorts", "Folgen"].map((item, index) => (
                 <motion.div
                   key={item}
@@ -119,7 +119,7 @@ export default function Home() {
                 >
                   <Link
                     href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="hover:text-[#ff0066]"
+                    className="hover:text-[#ff0066] font-roboto"
                     onClick={handleNavLinkClick}
                   >
                     {item}
@@ -132,7 +132,7 @@ export default function Home() {
                 transition={{ delay: 0.4, duration: 0.3 }}
                 className="mt-6"
               >
-                <Button variant="outline" className="rounded-full text-sm px-6">
+                <Button variant="outline" className="rounded-full text-sm px-6 font-roboto">
                   Kontakt
                 </Button>
               </motion.div>
@@ -147,10 +147,10 @@ export default function Home() {
           ref={heroRef}
           className="container mx-auto py-8 md:py-24 relative min-h-[500px] md:h-[720px] overflow-hidden bg-center bg-no-repeat bg-cover bg-[url('/bg/01.png')]"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <AnimatedSection direction="left" delay={0.2} className="space-y-6 z-10">
               <motion.h1
-                className="text-3xl md:text-5xl lg:text-6xl max-w-[560px] font-serif leading-tight"
+                className="text-3xl md:text-5xl lg:text-6xl max-w-[560px] font-robotoSlab leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isHeroInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -186,7 +186,7 @@ export default function Home() {
                 mit
               </motion.h1>
               <motion.p
-                className="text-gray-600 max-w-md"
+                className="text-gray-600 max-w-md font-roboto"
                 initial={{ opacity: 0 }}
                 animate={isHeroInView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -209,19 +209,18 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                 animate={isHeroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
                 transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-                style={isMobile ? {} : { scale: heroImageScale, rotate: heroImageRotate }}
+                style={isMobile ? {} : { }}
               >
                 <div className="relative w-full h-full">
                   <motion.div
-                    className={`${isMobile ? "w-[280px] h-[280px]" : "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px]"} overflow-hidden`}
-                    
+                    className={`${isMobile ? "w-[240px] h-[240px]" : "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px]"} overflow-hidden`} 
                   >
                     <Image
                       src="/hero.png"
                       alt="Christian und Christian"
                       width={isMobile ? 280 : 480}
                       height={isMobile ? 280 : 480}
-                      className={`${isMobile ? "w-[280px] h-[280px]" : "w-[480px] h-[480px]"} object-cover`}
+                      className={`${isMobile ? "w-[240px] h-[240px]" : "w-[480px] h-[480px]"} object-cover`}
                     />
                   </motion.div>
 
@@ -273,7 +272,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <AnimatedSection direction="up" className="space-y-6 z-10">
                 <motion.h2
-                  className="text-2xl md:text-4xl font-serif"
+                  className="text-2xl md:text-4xl font-robotoSlab"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isMapInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8 }}
@@ -281,7 +280,7 @@ export default function Home() {
                   Was wir machen
                 </motion.h2>
                 <motion.p
-                  className="text-gray-800 max-w-md"
+                  className="text-gray-800 max-w-md font-roboto"
                   initial={{ opacity: 0 }}
                   animate={isMapInView ? { opacity: 1 } : {}}
                   transition={{ duration: 0.8, delay: 0.2 }}
@@ -315,7 +314,8 @@ export default function Home() {
                       >
                         {item.number}
                       </motion.div>
-                      <div className="text-sm">{item.label}</div>
+                      <div className="text-sm font-roboto">{item.label}</div>
+                      
                     </motion.div>
                   ))}
                 </AnimatedSection>
@@ -337,20 +337,11 @@ export default function Home() {
                     >
                       <motion.div
                         className="text-3xl font-bold"
-                        animate={{
-                          scale: [1, 1.1, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Number.POSITIVE_INFINITY,
-                          repeatType: "reverse",
-                          ease: "easeInOut",
-                          delay: index * 0.3,
-                        }}
+                      
                       >
                         {item.number}
                       </motion.div>
-                      <div className="text-sm">{item.label}</div>
+                      <div className="text-sm font-roboto">{item.label}</div>
                     </motion.div>
                   ))}
                 </AnimatedSection>
@@ -364,16 +355,13 @@ export default function Home() {
                 style={{
                   backgroundImage: "url('/bg.png')",
                   backgroundPosition: "center",
-                  opacity: mapOpacity,
-                  scale: mapScale,
+                 
                 }}
               ></motion.div>
             ) : (
               <motion.div
                 className="mt-8 mx-auto max-w-md"
-                initial={{ opacity: 0, y: 30 }}
-                animate={isMapInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                
               >
                 <Image
                   src="/bg.png"
@@ -401,7 +389,7 @@ export default function Home() {
             >
               <div>
                 <motion.h2
-                  className="text-2xl md:text-4xl font-serif text-white"
+                  className="text-2xl md:text-4xl font-robotoSlab text-white"
                   initial={{ opacity: 0, x: -20 }}
                   animate={isShortsInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5 }}
@@ -409,7 +397,7 @@ export default function Home() {
                   Shorts
                 </motion.h2>
                 <motion.p
-                  className="text-white/80 max-w-md mt-2"
+                  className="text-white/80 max-w-md mt-2 font-roboto"
                   initial={{ opacity: 0 }}
                   animate={isShortsInView ? { opacity: 1 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 }}
@@ -473,7 +461,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <AnimatedSection direction="left" className="space-y-6">
                 <motion.h2
-                  className="text-2xl md:text-4xl font-serif"
+                  className="text-2xl md:text-4xl font-robotoSlab"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInstagramInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5 }}
@@ -481,7 +469,8 @@ export default function Home() {
                   Was wir machen
                 </motion.h2>
                 <motion.p
-                  className="text-gray-600 max-w-md"
+                  className="text-gray-600 max-w-md font-roboto"
+                  
                   initial={{ opacity: 0 }}
                   animate={isInstagramInView ? { opacity: 1 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 }}
@@ -497,11 +486,12 @@ export default function Home() {
                 >
                   <Link
                     href="https://instagram.com"
-                    className="inline-flex items-center text-black bg-white rounded-full px-6 h-10 hover:scale-120 transition-all"
+                    className="inline-flex items-center text-black bg-white font-roboto font-medium text-sm rounded-full px-6 h-10 hover:scale-120 transition-all"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Instagram className="mr-2 text-[#ff0066]" size={20} />
+                    <Instagram className="mr-2 text-[#ff0066] font-bold font-roboto" size={20} />
+                    
                     Jetzt folgen
                   </Link>
                 </motion.div>
@@ -578,15 +568,17 @@ export default function Home() {
         <div className="container mx-auto flex justify-center md:justify-between items-center">
           <div className="text-sm text-gray-500 flex space-x-4">
             <motion.div whileHover={{ scale: 1.05, color: "#ff0066" }}>
-              <Link href="/datenschutz" className="hover:underline">
+              <Link href="/datenschutz" className="hover:underline font-roboto">
+              
                 Datenschutz
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05, color: "#ff0066" }}>
-              <Link href="/impressum" className="hover:underline">
+              <Link href="/impressum" className="hover:underline font-roboto">
                 Impressum
               </Link>
             </motion.div>
+            <Instagram className="mr-2 w-full justify-right items-end font-bold font-roboto" size={20} />
           </div>
         </div>
       </motion.footer>
