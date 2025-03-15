@@ -368,7 +368,7 @@ export default function Home() {
             {/* Map Image - Background on desktop, regular image on mobile */}
             {!isMobile ? (
               <motion.div
-                className="absolute inset-0 opacity-40 z-0 bg-center bg-no-repeat bg-contain"
+                className="absolute inset-0 opacity-90 z-0 bg-center bg-no-repeat bg-contain"
                 style={{
                   backgroundImage: "url('/bg.png')",
                   backgroundPosition: "center",
@@ -380,7 +380,7 @@ export default function Home() {
               <motion.div
                 className="mt-8 mx-auto max-w-md"
                 initial={{ opacity: 0, y: 30 }}
-                animate={isMapInView ? { opacity: 0.6, y: 0 } : {}}
+                animate={isMapInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <Image
